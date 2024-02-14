@@ -1,13 +1,19 @@
-const Description = () => {
+import PropTypes from "prop-types";
+
+import { DescriptionWrap, DescriptionTitle } from "./Description.styled";
+
+const Description = ({ title, children }) => {
   return (
-    <>
-      <h1>Sip Happens Café</h1>
-      <p>
-        Please leave your feedback about our service by selecting one of the
-        options below.
-      </p>
-    </>
+    <DescriptionWrap>
+      <DescriptionTitle>{title}</DescriptionTitle>
+      {children}
+    </DescriptionWrap>
   );
+};
+
+Description.propTypes = {
+  title: PropTypes.string,
+  children: PropTypes.node,
 };
 
 export default Description;

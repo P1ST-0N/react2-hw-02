@@ -1,13 +1,15 @@
 import PropTypes from "prop-types";
 
+import { List, Button } from "./Options.styled";
+
 const Options = ({ onUpdate, onReset, total }) => {
   return (
-    <>
-      <button onClick={() => onUpdate("good")}>Good</button>
-      <button onClick={() => onUpdate("neutral")}>Neutral</button>
-      <button onClick={() => onUpdate("bad")}>Bad</button>
-      {total > 0 && <button onClick={onReset}>Reset</button>}
-    </>
+    <List>
+      <Button onClick={() => onUpdate("good")}>Good</Button>
+      <Button onClick={() => onUpdate("neutral")}>Neutral</Button>
+      <Button onClick={() => onUpdate("bad")}>Bad</Button>
+      {total > 0 && <Button onClick={onReset}>Reset</Button>}
+    </List>
   );
 };
 

@@ -1,14 +1,16 @@
 import PropTypes from "prop-types";
 
+import { Wrapper } from "./Feedback.styled";
+
 const Feedback = ({ values: { good, bad, neutral }, total, percent }) => {
   return (
-    <>
-      <p>Good: {good}</p>
-      <p>Neutral: {neutral}</p>
-      <p>Bad: {bad}</p>
-      <p>Total: {total}</p>
-      <p>Positiv: {percent}%</p>
-    </>
+    <Wrapper>
+      <li>Good: {good}</li>
+      <li>Neutral: {neutral}</li>
+      <li>Bad: {bad}</li>
+      <li>Total: {total}</li>
+      <li>Positiv: {percent}%</li>
+    </Wrapper>
   );
 };
 

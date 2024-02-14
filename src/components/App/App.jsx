@@ -1,5 +1,6 @@
 import { useState } from "react";
-import "./App.css";
+
+import { Container } from "./App.styled.jsx";
 
 import Feedback from "../Feedback/Feedback";
 import Options from "../Options/Options";
@@ -36,22 +37,24 @@ function App() {
   );
 
   return (
-    <div>
-      <Description />
-      <Options
-        onUpdate={updateFeedback}
-        onReset={resetFeedback}
-        total={totalFeedback}
-      />
-      {totalFeedback > 0 && (
-        <Feedback
-          values={values}
+    <Container>
+      <Description title="Sip Happens Café">
+        <Options
+          onUpdate={updateFeedback}
+          onReset={resetFeedback}
           total={totalFeedback}
-          percent={percentGoodFeedback}
         />
-      )}
-      {totalFeedback === 0 && <Notification />}
-    </div>
+        {totalFeedback !== 0 ? (
+          <Feedback
+            values={values}
+            total={totalFeedback}
+            percent={percentGoodFeedback}
+          />
+        ) : (
+          <Notification message="There is no feedback" />
+        )}
+      </Description>
+    </Container>
   );
 }
 
