@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Container } from "./App.styled.jsx";
 
@@ -8,11 +8,30 @@ import Description from "../Description/Description";
 import Notification from "../Notification/Notification";
 
 function App() {
-  const [values, setValues] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  const [values, setValues] = useState(() => {
+    const savedValue = window.localStorage.getItem("saved-feedback");
+
+    if (savedValue !== null) {
+      return JSON.parse(savedValue);
+    }
+
+    return {
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    };
   });
+
+  useEffect(() => {
+    window.localStorage.setItem("saved-feedback", JSON.stringify(values));
+  }, [values]);
+
+  // const updateFeedback = (feedbackType) => {
+  //   setValues({
+  //     ...values,
+  //     [feedbackType]: values[feedbackType] + 1,
+  //   });
+  // };
 
   const updateFeedback = (feedbackType) => {
     setValues((prevValues) => {
@@ -36,24 +55,29 @@ function App() {
     ((values.good + values.neutral) / totalFeedback) * 100
   );
 
+  // const description =
+  //   "Please leave your feedback about our service by selecting one of the options below.";
+
   return (
     <Container>
-      <Description title="Sip Happens Café">
-        <Options
-          onUpdate={updateFeedback}
-          onReset={resetFeedback}
+      <Description
+        title="Sip Happens Café"
+        descrition="Please leave your feedback about our service by selecting one of the options below."
+      ></Description>
+      <Options
+        onUpdate={updateFeedback}
+        onReset={resetFeedback}
+        total={totalFeedback}
+      />
+      {totalFeedback !== 0 ? (
+        <Feedback
+          values={values}
           total={totalFeedback}
+          percent={percentGoodFeedback}
         />
-        {totalFeedback !== 0 ? (
-          <Feedback
-            values={values}
-            total={totalFeedback}
-            percent={percentGoodFeedback}
-          />
-        ) : (
-          <Notification message="There is no feedback" />
-        )}
-      </Description>
+      ) : (
+        <Notification message="There is no feedback" />
+      )}
     </Container>
   );
 }
